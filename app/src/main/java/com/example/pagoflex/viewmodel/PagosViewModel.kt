@@ -2,6 +2,7 @@ package com.example.pagoflex.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.pagoflex.model.Pagos
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class PagosViewModel : ViewModel() {
 
@@ -12,4 +13,6 @@ class PagosViewModel : ViewModel() {
         estado = false,
         historial = listOf("17/10/2026","17/9/2026")
     )
+
+    privat val _uiState = MutableStateFlow()
 }
