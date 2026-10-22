@@ -9,5 +9,8 @@ object Dimens {
 
     val Pantalla = 20.dp
     val RadioTargeta = 16.dp
-    val AlturaBoton = 50.dp
+    val alturaBoton = 50.dp
+    val radioBoton = 14.dp
+    val bordeBoton = 2.dp
+    val elevacionBoton = 4.dp
 }
