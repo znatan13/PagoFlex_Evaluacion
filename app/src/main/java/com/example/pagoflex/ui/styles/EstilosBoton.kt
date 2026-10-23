@@ -1,6 +1,6 @@
 package com.example.pagoflex.ui.styles
 
-import android.graphics.drawable.shapes.Shape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape

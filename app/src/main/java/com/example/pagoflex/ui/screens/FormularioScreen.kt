@@ -21,11 +21,12 @@ import com.example.pagoflex.R
 import com.example.pagoflex.model.FormularioUiState
 import com.example.pagoflex.ui.themes.Dimens
 import com.example.pagoflex.viewmodel.FormularioViewModel
+import androidx.compose.runtime.getValue
 import com.example.pagoflex.viewmodel.PerfilViewModel
 
 @Composable
 fun FormularioScreen(
-    viewModel: FormularioViewModel = viewModel (){}
+    viewModel: FormularioViewModel = viewModel ()
 ){
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -54,7 +55,7 @@ fun FormularioContent(
     Scaffold (
         topBar = {
             TopAppBar(
-                title = { Text(stringResource("Crear cuenta")) },
+                title = { Text("Crear cuenta") },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
@@ -73,16 +74,16 @@ fun FormularioContent(
 
             ImagenEncabezado(
                 imagen = R.drawable./* BANNER AQUI */,
-                descripcion = stringResource("Banner de formulario"),
-                titulo = stringResource("Inicia Sesion."),
-                subtitulo = stringResource("Y paga tus cuentas facil.")
+                descripcion = Text("Banner de formulario"),
+                titulo = Text("Inicia Sesion."),
+                subtitulo = Text("Y paga tus cuentas facil.")
             )
         }
         Column(
             modifier = Modifier.padding(Dimens.Pantalla),
             verticalArrangement = Arrangement.spacedBy(Dimens.EspacioMediano)
         ) {
-            TarjetaSeccion(titulo = stringResource("Datos personales")) {
+            TarjetaSeccion(titulo = Text("Datos personales")) {
                 CampoTexto(
                     valor = uiState.nombre,
                     onValorCambia = onNombreCambia,
@@ -92,7 +93,7 @@ fun FormularioContent(
                 )
                 CampoCorreo(
                     valor = uiState.correo,
-                    onValorCambia = onNombreCambia,
+                    onValorCambia = onCorreoCambia,
                     etiqueta = stringResource("Nombre completo"),
                     icono = R.drawable./*ICONO CORREO*/,
                     error = uiState.errorCorreo
@@ -100,7 +101,7 @@ fun FormularioContent(
 
                 CampoContrasenia(
                     valor = uiState.contrasenia,
-                    onValorCambia = onNombreCambia,
+                    onValorCambia = onContraseniaCambia,
                     etiqueta = stringResource("Nombre completo"),
                     icono = R.drawable./*ICONO CANDADO*/,
                     error = uiState.errorContrasenia
