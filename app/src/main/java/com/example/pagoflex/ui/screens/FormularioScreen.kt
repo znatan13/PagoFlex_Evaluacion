@@ -1,16 +1,31 @@
 package com.example.pagoflex.ui.screens
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pagoflex.R
 import com.example.pagoflex.model.FormularioUiState
+import com.example.pagoflex.ui.themes.Dimens
 import com.example.pagoflex.viewmodel.FormularioViewModel
 import com.example.pagoflex.viewmodel.PerfilViewModel
 
 @Composable
 fun FormularioScreen(
-    viewModel: FormularioViewModel = viewModel(){}
+    viewModel: FormularioViewModel = viewModel (){}
 ){
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -36,9 +51,62 @@ fun FormularioContent(
     onRegistrar: () -> Unit,
     onLimpiar: () -> Unit
 ) {
-    Scaffold(
+    Scaffold (
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource("Crear cuenta")) },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                )
+            )
+        },
+        containerColor = MaterialTheme.colorScheme.background
+    )   {
+        innerPadding ->
 
-    ) {
+        Column(
+            modifier = Modifier.fillMaxSize()
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+        ) {
 
+            ImagenEncabezado(
+                imagen = R.drawable./* BANNER AQUI */,
+                descripcion = stringResource("Banner de formulario"),
+                titulo = stringResource("Inicia Sesion."),
+                subtitulo = stringResource("Y paga tus cuentas facil.")
+            )
+        }
+        Column(
+            modifier = Modifier.padding(Dimens.Pantalla),
+            verticalArrangement = Arrangement.spacedBy(Dimens.EspacioMediano)
+        ) {
+            TarjetaSeccion(titulo = stringResource("Datos personales")) {
+                CampoTexto(
+                    valor = uiState.nombre,
+                    onValorCambia = onNombreCambia,
+                    etiqueta = stringResource("Nombre completo"),
+                    icono = R.drawable./*ICONO PERFIL*/,
+                    error = uiState.errorNombre
+                )
+                CampoCorreo(
+                    valor = uiState.correo,
+                    onValorCambia = onNombreCambia,
+                    etiqueta = stringResource("Nombre completo"),
+                    icono = R.drawable./*ICONO CORREO*/,
+                    error = uiState.errorCorreo
+                )
+
+                CampoContrasenia(
+                    valor = uiState.contrasenia,
+                    onValorCambia = onNombreCambia,
+                    etiqueta = stringResource("Nombre completo"),
+                    icono = R.drawable./*ICONO CANDADO*/,
+                    error = uiState.errorContrasenia
+                )
+            }
+        }
     }
+
 }
