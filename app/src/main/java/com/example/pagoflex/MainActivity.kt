@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import com.example.pagoflex.ui.screens.FormularioScreen
 import com.example.pagoflex.ui.screens.PagosScreen
 import com.example.pagoflex.ui.screens.PerfilScreen
+import com.example.pagoflex.ui.themes.PagoFlexTheme
 
 
 enum class Pantalla { FORMULARIO, PERFIL, SUSCRIBCIONES}
@@ -17,7 +18,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            /* tema principal (themes.Theme)*/ {
+            PagoFlexTheme {
                 when (PANTALLA_INICIAL) {
                     Pantalla.FORMULARIO -> FormularioScreen()
                     Pantalla.PERFIL -> PerfilScreen()
