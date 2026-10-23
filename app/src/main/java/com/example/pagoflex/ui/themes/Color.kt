@@ -11,3 +11,4 @@ val Blanco = Color(0xFFFFFFFF)
 val Fondo = Color(0xFFF4F8F6)
 
 val Texto = Color(0xFF172B25)
+
