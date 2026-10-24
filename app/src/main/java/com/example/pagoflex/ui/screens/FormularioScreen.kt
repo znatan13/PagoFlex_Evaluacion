@@ -73,7 +73,7 @@ fun FormularioContent(
         ) {
 
             ImagenEncabezado(
-                imagen = R.drawable./* BANNER AQUI */,
+                imagen = R.drawable.banner_pago,
                 descripcion = Text("Banner de formulario"),
                 titulo = Text("Inicia Sesion."),
                 subtitulo = Text("Y paga tus cuentas facil.")
@@ -88,14 +88,14 @@ fun FormularioContent(
                     valor = uiState.nombre,
                     onValorCambia = onNombreCambia,
                     etiqueta = stringResource("Nombre completo"),
-                    icono = R.drawable./*ICONO PERFIL*/,
+                    icono = R.drawable.ic_perfil,
                     error = uiState.errorNombre
                 )
                 CampoCorreo(
                     valor = uiState.correo,
                     onValorCambia = onCorreoCambia,
                     etiqueta = stringResource("Nombre completo"),
-                    icono = R.drawable./*ICONO CORREO*/,
+                    icono = R.drawable.ic_correo,
                     error = uiState.errorCorreo
                 )
 
@@ -103,11 +103,10 @@ fun FormularioContent(
                     valor = uiState.contrasenia,
                     onValorCambia = onContraseniaCambia,
                     etiqueta = stringResource("Nombre completo"),
-                    icono = R.drawable./*ICONO CANDADO*/,
+                    icono = R.drawable.ic_candado,
                     error = uiState.errorContrasenia
                 )
             }
         }
     }
-
 }
