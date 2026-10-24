@@ -21,6 +21,7 @@ import com.example.pagoflex.R
 import com.example.pagoflex.model.FormularioUiState
 import com.example.pagoflex.ui.themes.Dimens
 import com.example.pagoflex.viewmodel.FormularioViewModel
+import androidx.compose.runtime.getValue
 import com.example.pagoflex.viewmodel.PerfilViewModel
 
 @Composable
@@ -54,7 +55,7 @@ fun FormularioContent(
     Scaffold (
         topBar = {
             TopAppBar(
-                title = { Text(stringResource("Crear cuenta")) },
+                title = { Text("Crear cuenta") },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
@@ -72,8 +73,8 @@ fun FormularioContent(
                 .verticalScroll(rememberScrollState())
         ) {
 
-            Imagen(
-                imagen = R.drawable./* BANNER AQUI */,
+            ImagenEncabezado(
+                imagen = R.drawable.banner_pago,
                 descripcion = stringResource("Banner de formulario"),
                 titulo = stringResource("Inicia Sesion."),
                 subtitulo = stringResource("Y paga tus cuentas facil.")
@@ -83,12 +84,12 @@ fun FormularioContent(
             modifier = Modifier.padding(Dimens.Pantalla),
             verticalArrangement = Arrangement.spacedBy(Dimens.EspacioMediano)
         ) {
-            TarjetaSeccion(titulo = stringResource("Datos personales")) {
+            TarjetaSeccion(titulo = Text("Datos personales")) {
                 CampoTexto(
                     valor = uiState.nombre,
                     onValorCambia = onNombreCambia,
                     etiqueta = stringResource("Nombre completo"),
-                    icono = R.drawable.ic_persona,
+                    icono = R.drawable.ic_perfil,
                     error = uiState.errorNombre
                 )
                 CampoCorreo(
@@ -109,5 +110,4 @@ fun FormularioContent(
             }
         }
     }
-
 }

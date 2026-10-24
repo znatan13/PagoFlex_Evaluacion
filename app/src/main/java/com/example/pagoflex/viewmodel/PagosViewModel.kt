@@ -18,7 +18,7 @@ class PagosViewModel : ViewModel() {
         historial = listOf("17/10/2026","17/9/2026")
     )
 
-    private val _uiState = MutableStateFlow(PagosUrgentes(Pagos = pagosEjemplo))
+    private val _uiState = MutableStateFlow(PagosUrgentes(pagos = pagosEjemplo))
 
     val uiState: StateFlow<PagosUrgentes> = _uiState.asStateFlow()
 
