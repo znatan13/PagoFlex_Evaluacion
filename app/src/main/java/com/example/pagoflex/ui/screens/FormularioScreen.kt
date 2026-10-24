@@ -67,16 +67,17 @@ fun FormularioContent(
         innerPadding ->
 
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
 
             ImagenEncabezado(
                 imagen = R.drawable.banner_pago,
-                descripcion = Text("Banner de formulario"),
-                titulo = Text("Inicia Sesion."),
-                subtitulo = Text("Y paga tus cuentas facil.")
+                descripcion = stringResource("Banner de formulario"),
+                titulo = stringResource("Inicia Sesion."),
+                subtitulo = stringResource("Y paga tus cuentas facil.")
             )
         }
         Column(
