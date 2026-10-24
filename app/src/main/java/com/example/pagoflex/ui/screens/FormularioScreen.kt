@@ -25,7 +25,7 @@ import com.example.pagoflex.viewmodel.PerfilViewModel
 
 @Composable
 fun FormularioScreen(
-    viewModel: FormularioViewModel = viewModel (){}
+    viewModel: FormularioViewModel = viewModel ()
 ){
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -66,12 +66,13 @@ fun FormularioContent(
         innerPadding ->
 
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
 
-            ImagenEncabezado(
+            Imagen(
                 imagen = R.drawable./* BANNER AQUI */,
                 descripcion = stringResource("Banner de formulario"),
                 titulo = stringResource("Inicia Sesion."),
@@ -87,22 +88,22 @@ fun FormularioContent(
                     valor = uiState.nombre,
                     onValorCambia = onNombreCambia,
                     etiqueta = stringResource("Nombre completo"),
-                    icono = R.drawable./*ICONO PERFIL*/,
+                    icono = R.drawable.ic_persona,
                     error = uiState.errorNombre
                 )
                 CampoCorreo(
                     valor = uiState.correo,
-                    onValorCambia = onNombreCambia,
+                    onValorCambia = onCorreoCambia,
                     etiqueta = stringResource("Nombre completo"),
-                    icono = R.drawable./*ICONO CORREO*/,
+                    icono = R.drawable.ic_correo,
                     error = uiState.errorCorreo
                 )
 
                 CampoContrasenia(
                     valor = uiState.contrasenia,
-                    onValorCambia = onNombreCambia,
+                    onValorCambia = onContraseniaCambia,
                     etiqueta = stringResource("Nombre completo"),
-                    icono = R.drawable./*ICONO CANDADO*/,
+                    icono = R.drawable.ic_candado,
                     error = uiState.errorContrasenia
                 )
             }
