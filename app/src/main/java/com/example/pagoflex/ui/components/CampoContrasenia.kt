@@ -1,0 +1,53 @@
+package com.example.pagoflex.ui.components
+
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import com.example.pagoflex.R
+import com.example.pagoflex.ui.themes.Dimens
+import java.lang.reflect.Modifier
+
+@Composable
+fun CampoContrasenia(
+    valor: String,
+    onValorCambia: (String) -> Unit,
+    etiqueta: String,
+    visible: Boolean,
+    onAlternarVisible: () -> Unit,
+    modifier: Modifier = Modifier,
+    error: String? = null
+) {
+    OutlinedTextField(
+        value = valor,
+        onValueChange = onValorCambia,
+        modifier = modifier.fillMaxWidth(),
+        label = { Text(etiqueta) },
+        leadingIcon = {
+            Icon(
+                painter = painterResource(R.drawable.ic_candado),
+                contentDescription = null,
+                modifier = Modifier.size(Dimens.tamanoIcono)
+            )
+        },
+        trailingIcon = {
+            IconButton(onClick = onAlternarVisible) {
+                Icon(
+                    painter = painterResource(
+                        if (visible) R.drawable.ic_ojo_tachado else R.drawable.ic_ojo_normal
+                        ),
+                    contentDescription = stringResource(
+                        if (visible)
+                    )
+
+                    ))
+            }
+        }
+    )
+}
