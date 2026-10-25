@@ -2,11 +2,19 @@ package com.example.pagoflex.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -22,13 +30,19 @@ import com.example.pagoflex.model.FormularioUiState
 import com.example.pagoflex.ui.themes.Dimens
 import com.example.pagoflex.viewmodel.FormularioViewModel
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.pagoflex.ui.components.BotonPrincipal
+import com.example.pagoflex.ui.components.BotonSecundario
 import com.example.pagoflex.ui.components.CampoContrasenia
 import com.example.pagoflex.ui.components.CampoCorreo
 import com.example.pagoflex.ui.components.CampoTexto
 import com.example.pagoflex.ui.components.CasillaConTexto
 import com.example.pagoflex.ui.components.ImagenEncabezado
 import com.example.pagoflex.ui.components.TarjetaSeccion
+import com.example.pagoflex.ui.themes.Exito
+import com.example.pagoflex.ui.themes.Fondo
 import com.example.pagoflex.ui.themes.PagoFlexTheme
 import com.example.pagoflex.viewmodel.PerfilViewModel
 
@@ -65,7 +79,7 @@ fun FormularioContent(
     Scaffold (
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(aaaaaaa)) },
+                title = { Text(stringResource(R.string.titulo_formulario)) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
@@ -98,7 +112,7 @@ fun FormularioContent(
                 CampoTexto(
                     valor = uiState.nombre,
                     onValorCambia = onNombreCambia,
-                    etiqueta = stringResource(),
+                    etiqueta = stringResource(R.string.campo_nombre),
                     icono = R.drawable.ic_persona,
                     error = uiState.errorNombre
                 )
@@ -106,7 +120,7 @@ fun FormularioContent(
                 CampoCorreo(
                     valor = uiState.correo,
                     onValorCambia = onCorreoCambia,
-                    etiqueta = stringResource(),
+                    etiqueta = stringResource(R.string.campo_correo),
                     icono = R.drawable.ic_correo,
                     error = uiState.errorCorreo
                 )
@@ -114,8 +128,9 @@ fun FormularioContent(
                 CampoContrasenia(
                     valor = uiState.contrasenia,
                     onValorCambia = onContraseniaCambia,
-                    etiqueta = stringResource(),
-                    icono = R.drawable.ic_candado,
+                    etiqueta = stringResource(R.string.campo_contrasenia),
+                    visible = uiState.contraseniaVisible,
+                    onAlternarVisible = onAlternarVisibilidad,
                     error = uiState.errorContrasenia
                 )
 
@@ -136,6 +151,50 @@ fun FormularioContent(
                 }
             }
 
+            Row(horizontalArrangement = Arrangement.spacedBy(Dimens.EspacioMediano)) {
+                BotonSecundario(
+                    texto = stringResource(R.string.btn_limbiar),
+                    onClick = onLimpiar,
+                    modifier = Modifier.weight(1f)
+                )
+                BotonPrincipal(
+                        texto = stringResource(R.string.btn_registro),
+                        onClick = onRegistrar,
+                        icono = R.drawable.ic_estado_correcto,
+                        modifier = Modifier.weight(1f)
+                )
+            }
+            if (uiState.registroExitoso) {
+                MensajeExito(nombre = uiState.nombre)
+            }
+
+            Spacer(Modifier.height(Dimens.EspacioGrande))
+        }
+    }
+}
+
+
+@Composable
+private fun MensajeExito(nombre: String) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = Fondo, contentColor = Exito)
+    ) {
+        Row(
+            modifier = Modifier.padding(Dimens.EspacioMediano),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_estado_correcto),
+                contentDescription = null,
+                tint = Exito,
+                modifier = Modifier.size(Dimens.tamanoIcono)
+            )
+            Text(
+                text = stringResource(R.string.registro_exitoso, nombre),
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(start = Dimens.EspacioPequeno)
+            )
         }
     }
 }
@@ -160,6 +219,29 @@ private fun FormularioVacioPreview(){
             onRegistrar = {},
             onLimpiar = {}
 
+        )
+    }
+}
+
+@Preview(showBackground = true, heightDp = 1400, name = "Con errores")
+@Composable
+private fun FormularioConErroresPreview() {
+    PagoFlexTheme {
+        FormularioContent(
+            uiState = FormularioUiState(
+                correo = "ana@",
+                errorNombre = "El nombre es obligatorio",
+                errorCorreo = "Ingresa un correo válido",
+                errorContrasenia = "Mínimo 6 caracteres",
+                errorTerminos = "Debes aceptar los términos"
+            ),
+            onNombreCambia = {},
+            onCorreoCambia = {},
+            onContraseniaCambia = {},
+            onAlternarVisibilidad = {},
+            onTerminosCambia = {},
+            onRegistrar = {},
+            onLimpiar = {}
         )
     }
 }
