@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.graphics.Color
 import com.example.pagoflex.ui.themes.Azul
+import com.example.pagoflex.ui.themes.Exito
 import com.example.pagoflex.ui.themes.Texto
 
 
@@ -25,6 +26,10 @@ object EstiloPagos {
         color = Texto
     )
 
+    val exitoso = TextStyle(
+        fontSize = 16.sp,
+        color = Exito
+    )
     val tarjeta = RoundedCornerShape(16.dp)
     val boton = RoundedCornerShape(12.dp)
     val espacio = 16.dp

@@ -1,5 +1,7 @@
 package com.example.pagoflex.viewmodel
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import com.example.pagoflex.model.Pagos
 import com.example.pagoflex.model.PagosUrgentes
@@ -7,6 +9,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 class PagosViewModel : ViewModel() {
 
@@ -22,12 +27,33 @@ class PagosViewModel : ViewModel() {
 
     val uiState: StateFlow<PagosUrgentes> = _uiState.asStateFlow()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun onAlternarPago(){
+
+        val formato = DateTimeFormatter.ofPattern("dd/mm/yyyy")
+        val hoy = LocalDate.now()
+
         _uiState.update { estado ->
-            val cambio = if (estado.urgente) -1 else 1
+            val vencimiento = LocalDate.parse(
+                estado.pagos.vencimiento,
+                formato
+            )
+            val diasTermina = ChronoUnit.DAYS.between(
+                hoy,
+                vencimiento
+            )
             estado.copy(
-                urgente = !estado.urgente,
-                pagos =estado.pagos.copy(vencimiento = estado.pagos.vencimiento ) /* Modificar, debe contar (si queda una semana, es urgente) */
+                urgente = diasTermina <= 10
+            )
+        }
+
+    }
+    fun onPagado() {
+        _uiState.update { estado ->
+            estado.copy(
+                pagos = estado.pagos.copy(
+                    estado = true
+                )
             )
         }
     }

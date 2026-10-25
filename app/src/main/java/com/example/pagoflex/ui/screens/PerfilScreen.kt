@@ -1,8 +1,6 @@
 package com.example.pagoflex.ui.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -37,13 +34,10 @@ import com.example.pagoflex.ui.themes.Dimens
 import com.example.pagoflex.viewmodel.PerfilViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.material3.Card
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.pagoflex.model.Perfil
 import com.example.pagoflex.ui.components.Avatar
 import com.example.pagoflex.ui.themes.PagoFlexTheme
-import kotlin.div
-
 @Composable
 fun PerfilScreen(
     viewModel: PerfilViewModel = viewModel()
@@ -140,7 +134,7 @@ private fun EncabezadoPerfil() {
                 .align(Alignment.TopCenter)
         )
         Avatar(
-            imagen = R.drawable.ic_perfil,                      // res/drawable/avatar_usuario.png
+            imagen = R.drawable.ic_persona,                      // res/drawable/avatar_usuario.png
             descripcion = stringResource(R.string.cd_avatar),
             modifier = Modifier.align(Alignment.BottomCenter)
         )
