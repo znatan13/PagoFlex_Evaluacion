@@ -19,9 +19,14 @@
     <string name="titulo_perfil">Mi perfil</string>
 
 
+    <string name="titulo_pago">Subscripciones</string>
+    <string name="desc_pago">Administra tus subscripción aquí</string>
+
+
+
     <string name="campo_compania"> Subscripcion: </string>
     <string name="campo_descripcion"> Descripción </string>
-    <string name="valor_pago"> Precio $</string>
+    <string name="valor_pago"> Detalle de pago </string>
     <string name="btn_cancelar"> Pagado </string>
     <string name="btn_pagar"> Pendiente </string>
 

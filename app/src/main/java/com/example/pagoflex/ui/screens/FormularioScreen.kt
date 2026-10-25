@@ -199,7 +199,7 @@ private fun MensajeExito(nombre: String) {
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 @Composable
 private fun FormularioVacioPreview(){
     PagoFlexTheme {
@@ -223,7 +223,7 @@ private fun FormularioVacioPreview(){
     }
 }
 
-@Preview(showBackground = true, heightDp = 1400, name = "Con errores")
+@Preview(showBackground = true, name = "Con errores")
 @Composable
 private fun FormularioConErroresPreview() {
     PagoFlexTheme {
