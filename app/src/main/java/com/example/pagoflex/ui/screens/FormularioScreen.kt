@@ -48,7 +48,8 @@ import com.example.pagoflex.viewmodel.PerfilViewModel
 
 @Composable
 fun FormularioScreen(
-    viewModel: FormularioViewModel = viewModel ()
+    viewModel: FormularioViewModel = viewModel (),
+    onRegistroExitoso: () -> Unit = {}
 ){
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -59,8 +60,14 @@ fun FormularioScreen(
         onContraseniaCambia = viewModel::onContraseniaCambia,
         onAlternarVisibilidad = viewModel::onAlternarVisibilidad,
         onTerminosCambia = viewModel::onTerminosCambia,
-        onRegistrar = viewModel::onRegistrar,
-        onLimpiar = viewModel::onLimpiar
+        onLimpiar = viewModel::onLimpiar,
+        onRegistrar = {
+            viewModel.onRegistrar()
+
+            if (viewModel.uiState.value.registroExitoso) {
+                onRegistroExitoso()
+            }
+        }
     )
 }
 
