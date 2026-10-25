@@ -1,6 +1,7 @@
 package com.example.pagoflex.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -46,7 +47,6 @@ fun PerfilScreen(
 
     PerfilContent(
         uiState = uiState,
-        onPagar = viewModel::onPagar
     )
 
 }
@@ -55,7 +55,6 @@ fun PerfilScreen(
 @Composable
 fun PerfilContent(
     uiState: PerfilUiState,
-    onPagar: () -> Unit
 ) {
     val perfil = uiState.perfil
 
@@ -63,22 +62,7 @@ fun PerfilContent(
         topBar = {
             CenterAlignedTopAppBar(title = { Text(stringResource(R.string.titulo_perfil)) })
         },
-        floatingActionButton = {
-            ExtendedFloatingActionButton(
-                onClick = onPagar,
-                icon = {
-                    Icon(
-                        painter = painterResource(if (uiState.pagaste) R.drawable.ic_estado_correcto else R.drawable.ic_estado_incorrecto),
-                        contentDescription = null
-                    )
-                },
-                text = {
-                    Text(stringResource(if (uiState.pagaste) R.string.btn_pagar else R.string.btn_cancelar ))
-                },
-                containerColor = MaterialTheme.colorScheme.tertiary,
-                contentColor = MaterialTheme.colorScheme.onTertiary
-            )
-        }
+
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -95,20 +79,24 @@ fun PerfilContent(
                 modifier = Modifier.padding(Dimens.Pantalla),
                 verticalArrangement = Arrangement.spacedBy(Dimens.EspacioMediano)
             ) {
-                Row(horizontalArrangement = Arrangement.spacedBy(Dimens.EspacioMediano)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(Dimens.EspacioPequeno))
+                {
                     Card(modifier = Modifier.weight(1f)) {
-                        Column(Modifier.padding(16.dp)) {
+                        Column(Modifier.padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                             Text("Suscripciones")
-                            Text(perfil.suscripciones.toString())
+                            Text( perfil.suscripciones.toString())
                         }
 
-                        Card(modifier = Modifier.weight(1f)) {
-                            Column(Modifier.padding(16.dp)) {
-                                Text("Cuentas pagadas")
-                                Text(perfil.pagadas.toString())
-                            }
+                        Spacer(Modifier.height(5.dp))
+                    }
+
+
+                    Card(modifier = Modifier.weight(1f)) {
+                        Column(Modifier.padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text("Cuentas pagadas")
+                            Text(perfil.pagadas.toString())
                         }
-                        Spacer(Modifier.height(72.dp))
+                        Spacer(Modifier.height(5.dp))
                     }
                 }
             }
@@ -125,7 +113,7 @@ private fun EncabezadoPerfil() {
             .height(Dimens.altoPortada + Dimens.tamanoAvatar / 2)
     ) {
         Image(
-            painter = painterResource(R.drawable.banner_pago),
+            painter = painterResource(R.drawable.ic_banner),
             contentDescription = stringResource(R.string.cd_portada),
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -134,7 +122,7 @@ private fun EncabezadoPerfil() {
                 .align(Alignment.TopCenter)
         )
         Avatar(
-            imagen = R.drawable.ic_persona,
+            imagen = R.drawable.ic_avatar,
             descripcion = stringResource(R.string.cd_avatar),
             modifier = Modifier.align(Alignment.BottomCenter)
         )
@@ -153,7 +141,6 @@ private val perfilPreview = Perfil(
 private fun PerfilPreview() {
     PagoFlexTheme {
         PerfilContent(
-            uiState = PerfilUiState(perfil = perfilPreview),
-            onPagar = {})
+            uiState = PerfilUiState(perfil = perfilPreview),)
     }
 }

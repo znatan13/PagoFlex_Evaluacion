@@ -20,13 +20,5 @@ class PerfilViewModel : ViewModel(){
 
     val uiState: StateFlow<PerfilUiState> = _uiState.asStateFlow()
 
-    fun onPagar(){
-        _uiState.update { estado ->
-            val paga = if (estado.pagaste) -1 else 1
-            estado.copy(
-                pagaste = !estado.pagaste,
-                perfil = estado.perfil.copy(pagadas = estado.perfil.pagadas + paga)
-            )
-        }
-    }
+
 }
