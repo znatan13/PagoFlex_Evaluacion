@@ -1,7 +1,9 @@
 package com.example.pagoflex.ui.components
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -9,10 +11,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
 import com.example.pagoflex.R
-import com.example.pagoflex.ui.themes.Dimens
-import java.lang.reflect.Modifier
 
 @Composable
 fun CampoContrasenia(
@@ -20,6 +23,7 @@ fun CampoContrasenia(
     onValorCambia: (String) -> Unit,
     etiqueta: String,
     visible: Boolean,
+    @DrawableRes icono: Int,
     onAlternarVisible: () -> Unit,
     modifier: Modifier = Modifier,
     error: String? = null
@@ -33,21 +37,34 @@ fun CampoContrasenia(
             Icon(
                 painter = painterResource(R.drawable.ic_candado),
                 contentDescription = null,
-                modifier = Modifier.size(Dimens.tamanoIcono)
+                modifier = Modifier.size(20.dp)
             )
         },
         trailingIcon = {
             IconButton(onClick = onAlternarVisible) {
                 Icon(
                     painter = painterResource(
-                        if (visible) R.drawable.ic_ojo_tachado else R.drawable.ic_ojo_normal
-                        ),
-                    contentDescription = stringResource(
-                        if (visible)
-                    )
-
-                    ))
+                        if (visible) R.drawable.ic_ojo_tachado
+                        else R.drawable.ic_ojo_normal
+                    ),
+                    contentDescription = if (visible)
+                        "Ocultar Contraseña"
+                    else
+                        "Mostrar Contraseña"
+                )
             }
-        }
+        },
+        visualTransformation = if (visible)
+            VisualTransformation.None
+        else
+            PasswordVisualTransformation(),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Password
+        ),
+        isError = error !=null,
+        supportingText = {
+            if (error != null) Text(error)
+        },
+        singleLine = true
     )
 }
