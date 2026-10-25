@@ -22,11 +22,14 @@ import com.example.pagoflex.model.FormularioUiState
 import com.example.pagoflex.ui.themes.Dimens
 import com.example.pagoflex.viewmodel.FormularioViewModel
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.pagoflex.ui.components.CampoContrasenia
 import com.example.pagoflex.ui.components.CampoCorreo
 import com.example.pagoflex.ui.components.CampoTexto
+import com.example.pagoflex.ui.components.CasillaConTexto
 import com.example.pagoflex.ui.components.ImagenEncabezado
 import com.example.pagoflex.ui.components.TarjetaSeccion
+import com.example.pagoflex.ui.themes.PagoFlexTheme
 import com.example.pagoflex.viewmodel.PerfilViewModel
 
 @Composable
@@ -41,6 +44,7 @@ fun FormularioScreen(
         onCorreoCambia = viewModel::onCorreoCambia,
         onContraseniaCambia = viewModel::onContraseniaCambia,
         onAlternarVisibilidad = viewModel::onAlternarVisibilidad,
+        onTerminosCambia = viewModel::onTerminosCambia,
         onRegistrar = viewModel::onRegistrar,
         onLimpiar = viewModel::onLimpiar
     )
@@ -54,13 +58,14 @@ fun FormularioContent(
     onCorreoCambia: (String) -> Unit,
     onContraseniaCambia: (String) -> Unit,
     onAlternarVisibilidad: () -> Unit,
+    onTerminosCambia: (Boolean) -> Unit,
     onRegistrar: () -> Unit,
     onLimpiar: () -> Unit
 ) {
     Scaffold (
         topBar = {
             TopAppBar(
-                title = { Text("Crear cuenta") },
+                title = { Text(stringResource(aaaaaaa)) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
@@ -89,19 +94,19 @@ fun FormularioContent(
             modifier = Modifier.padding(Dimens.Pantalla),
             verticalArrangement = Arrangement.spacedBy(Dimens.EspacioMediano)
         ) {
-            TarjetaSeccion (titulo = "Datos personales") {
+            TarjetaSeccion (valor = stringResource(R.string.seccion_datos)) {
                 CampoTexto(
                     valor = uiState.nombre,
                     onValorCambia = onNombreCambia,
-                    etiqueta = "Nombre completo",
-                    icono = R.drawable.ic_perfil,
+                    etiqueta = stringResource(),
+                    icono = R.drawable.ic_persona,
                     error = uiState.errorNombre
                 )
 
                 CampoCorreo(
                     valor = uiState.correo,
                     onValorCambia = onCorreoCambia,
-                    etiqueta = "Nombre completo",
+                    etiqueta = stringResource(),
                     icono = R.drawable.ic_correo,
                     error = uiState.errorCorreo
                 )
@@ -109,13 +114,52 @@ fun FormularioContent(
                 CampoContrasenia(
                     valor = uiState.contrasenia,
                     onValorCambia = onContraseniaCambia,
-                    etiqueta = "Contraseña",
-                    visible = uiState.contraseniaVisible,
-                    onAlternarVisible = onAlternarVisibilidad,
+                    etiqueta = stringResource(),
                     icono = R.drawable.ic_candado,
                     error = uiState.errorContrasenia
                 )
+
             }
+            Column {
+                CasillaConTexto(
+                    texto = stringResource(R.string.opcion_terminos),
+                    marcado = uiState.aceptarTerminos,
+                    onCambio = onTerminosCambia
+                )
+                uiState.errorTerminos?.let { mensaje ->
+                    Text(
+                        text = mensaje,
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(start = Dimens.EspacioPequeno)
+                    )
+                }
+            }
+
         }
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+private fun FormularioVacioPreview(){
+    PagoFlexTheme {
+        FormularioContent(
+            uiState = FormularioUiState(
+                correo = "@gmail.com",
+                errorNombre = "El nombre es obligatorio",
+                errorCorreo = "Ingrese un correo valido",
+                errorContrasenia = "Minimo 6 caracteres",
+                errorTerminos = "Debes aceptar los terminos"
+            ),
+            onNombreCambia = {},
+            onCorreoCambia = {},
+            onContraseniaCambia = {},
+            onAlternarVisibilidad = {},
+            onTerminosCambia = {},
+            onRegistrar = {},
+            onLimpiar = {}
+
+        )
     }
 }

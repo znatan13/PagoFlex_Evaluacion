@@ -26,6 +26,9 @@ class FormularioViewModel : ViewModel() {
         _uiState.update { it.copy(contraseniaVisible = !it.contraseniaVisible) }
     }
 
+    fun onTerminosCambia(valor: Boolean){
+        _uiState.update { it.copy(aceptarTerminos = valor, errorTerminos = null) }
+    }
 
     fun onRegistrar() {
         val estado = _uiState.value
