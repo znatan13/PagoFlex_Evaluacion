@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">PagoFlex</string>
+
+
+    <string name="titulo_formulario">Crear cuenta</string>
+    <string name="banner_titulo">Únete a nosotros</string>
+    <string name="banner_subtitulo">Paga tus cuentas en segundos</string>
+    <string name="seccion_datos"> Datos personales </string>
+    <string name="campo_nombre">Nombre completo</string>
+    <string name="campo_correo">Correo electronico</string>
+    <string name="campo_contrasenia">Contraseña</string>
+    <string name="opcion_terminos">Acepto los terminos y condiciones</string>
+    <string name="btn_limbiar">Limpiar</string>
+    <string name="btn_registro">Registrarme</string>
+    <string name="registro_exitoso">Su cuenta fue creada con exito</string>
+
+
+
+    <string name="titulo_perfil">Mi perfil</string>
+
+
+    <string name="campo_compania"> Subscripcion: </string>
+    <string name="campo_descripcion"> Descripción </string>
+    <string name="valor_pago"> Precio $</string>
+    <string name="btn_cancelar"> Pagado </string>
+    <string name="btn_pagar"> Pendiente </string>
+
+    <string name="cd_banner"> Banner </string>
+    <string name="cd_portada"> portada </string>
+    <string name="cd_avatar"> avatar </string>
+    <string name="cd_mostrar_contrasenia"> Mostrar contraseña </string>
+    <string name="cd_ocultar_contrasenia"> Ocultar contraseña </string>
 </resources>

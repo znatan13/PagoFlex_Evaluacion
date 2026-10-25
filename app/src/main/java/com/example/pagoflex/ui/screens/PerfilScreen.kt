@@ -37,8 +37,12 @@ import com.example.pagoflex.ui.themes.Dimens
 import com.example.pagoflex.viewmodel.PerfilViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.material3.Card
-import androidx.compose.ui.unit.dp
-import org.w3c.dom.Text
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.pagoflex.model.Perfil
+import com.example.pagoflex.ui.components.Avatar
+import com.example.pagoflex.ui.themes.PagoFlexTheme
+import kotlin.div
 
 @Composable
 fun PerfilScreen(
@@ -63,7 +67,7 @@ fun PerfilContent(
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(title = { Text("Mi perfil") })
+            CenterAlignedTopAppBar(title = { Text(stringResource(R.string.titulo_perfil)) })
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(
@@ -75,7 +79,7 @@ fun PerfilContent(
                     )
                 },
                 text = {
-                    Text(if (uiState.pagaste) "Pagado" else "Pendiente")
+                    Text(stringResource(if (uiState.pagaste) R.string.btn_pagar else R.string.btn_cancelar ))
                 },
                 containerColor = MaterialTheme.colorScheme.tertiary,
                 contentColor = MaterialTheme.colorScheme.onTertiary
@@ -89,6 +93,8 @@ fun PerfilContent(
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            EncabezadoPerfil()
+
             Spacer(Modifier.height(Dimens.EspacioPequeno))
             Text(text = perfil.nombre, style = MaterialTheme.typography.titleLarge)
             Column(
@@ -113,5 +119,47 @@ fun PerfilContent(
                 }
             }
         }
+    }
+}
+
+
+@Composable
+private fun EncabezadoPerfil() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(Dimens.altoPortada + Dimens.tamanoAvatar / 2)
+    ) {
+        Image(
+            painter = painterResource(R.drawable.banner_pago),
+            contentDescription = stringResource(R.string.cd_portada),
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(Dimens.altoPortada)
+                .align(Alignment.TopCenter)
+        )
+        Avatar(
+            imagen = R.drawable.ic_perfil,                      // res/drawable/avatar_usuario.png
+            descripcion = stringResource(R.string.cd_avatar),
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
+    }
+}
+
+private val perfilPreview = Perfil(
+    nombre = "Camila Rojas",
+    correo = "camilo.ro@gmail.com",
+    pagadas = 2,
+    suscripciones = 5
+)
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+private fun PerfilPreview() {
+    PagoFlexTheme {
+        PerfilContent(
+            uiState = PerfilUiState(perfil = perfilPreview),
+            onPagar = {})
     }
 }

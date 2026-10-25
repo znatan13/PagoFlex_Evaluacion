@@ -1,6 +1,5 @@
 package com.example.pagoflex.ui.components
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
@@ -16,6 +15,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.pagoflex.R
+import com.example.pagoflex.ui.themes.Dimens
 
 @Composable
 fun CampoContrasenia(
@@ -23,7 +23,6 @@ fun CampoContrasenia(
     onValorCambia: (String) -> Unit,
     etiqueta: String,
     visible: Boolean,
-    @DrawableRes icono: Int,
     onAlternarVisible: () -> Unit,
     modifier: Modifier = Modifier,
     error: String? = null
@@ -37,7 +36,7 @@ fun CampoContrasenia(
             Icon(
                 painter = painterResource(R.drawable.ic_candado),
                 contentDescription = null,
-                modifier = Modifier.size(20.dp)
+                modifier = Modifier.size(Dimens.tamanoIcono)
             )
         },
         trailingIcon = {
