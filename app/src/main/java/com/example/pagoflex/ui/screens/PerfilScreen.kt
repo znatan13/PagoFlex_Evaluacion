@@ -35,6 +35,9 @@ import com.example.pagoflex.R
 import com.example.pagoflex.model.PerfilUiState
 import com.example.pagoflex.ui.themes.Dimens
 import com.example.pagoflex.viewmodel.PerfilViewModel
+import androidx.compose.runtime.getValue
+import androidx.compose.material3.Card
+import androidx.compose.ui.unit.dp
 import org.w3c.dom.Text
 
 @Composable
@@ -59,9 +62,9 @@ fun PerfilContent(
     val perfil = uiState.perfil
 
     Scaffold(
-    topBar = {
-        CenterAlignedTopAppBar(title = { Text(stringResource("Mi perfil")) })
-    },
+        topBar = {
+            CenterAlignedTopAppBar(title = { Text("Mi perfil") })
+        },
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 onClick = onPagar,
@@ -72,7 +75,7 @@ fun PerfilContent(
                     )
                 },
                 text = {
-                    Text(stringResource(if (uiState.pagaste) "Pagado" else "Pendiente"))
+                    Text(if (uiState.pagaste) "Pagado" else "Pendiente")
                 },
                 containerColor = MaterialTheme.colorScheme.tertiary,
                 contentColor = MaterialTheme.colorScheme.onTertiary
@@ -93,10 +96,21 @@ fun PerfilContent(
                 verticalArrangement = Arrangement.spacedBy(Dimens.EspacioMediano)
             ) {
                 Row(horizontalArrangement = Arrangement.spacedBy(Dimens.EspacioMediano)) {
-                    /*Tarjeta component*/(perfil.suscripciones.toString(), "Suscripciones", Modifier.weight(1f))
-                    /*Tarjeta component*/(perfil.pagadas.toString(), "Cuentas pagadas", Modifier.weight(1f))
+                    Card(modifier = Modifier.weight(1f)) {
+                        Column(Modifier.padding(16.dp)) {
+                            Text("Suscripciones")
+                            Text(perfil.suscripciones.toString())
+                        }
+
+                        Card(modifier = Modifier.weight(1f)) {
+                            Column(Modifier.padding(16.dp)) {
+                                Text("Cuentas pagadas")
+                                Text(perfil.pagadas.toString())
+                            }
+                        }
+                        Spacer(Modifier.height(72.dp))
+                    }
                 }
-                Spacer(Modifier.height(72.dp))
             }
         }
     }
