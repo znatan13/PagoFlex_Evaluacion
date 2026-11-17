@@ -48,7 +48,9 @@ import com.example.pagoflex.viewmodel.PerfilViewModel
 
 @Composable
 fun FormularioScreen(
-    viewModel: FormularioViewModel = viewModel ()
+    viewModel: FormularioViewModel = viewModel (),
+    onRegistroExitoso: () -> Unit = {},
+    onVolverLogin: () -> Unit = {}
 ){
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -59,8 +61,15 @@ fun FormularioScreen(
         onContraseniaCambia = viewModel::onContraseniaCambia,
         onAlternarVisibilidad = viewModel::onAlternarVisibilidad,
         onTerminosCambia = viewModel::onTerminosCambia,
-        onRegistrar = viewModel::onRegistrar,
-        onLimpiar = viewModel::onLimpiar
+        onLimpiar = viewModel::onLimpiar,
+        onRegistrar = {
+            viewModel.onRegistrar()
+
+            if (viewModel.uiState.value.registroExitoso) {
+                onRegistroExitoso()
+            }
+        },
+        onVolverLogin = onVolverLogin
     )
 }
 
@@ -74,9 +83,10 @@ fun FormularioContent(
     onAlternarVisibilidad: () -> Unit,
     onTerminosCambia: (Boolean) -> Unit,
     onRegistrar: () -> Unit,
-    onLimpiar: () -> Unit
+    onLimpiar: () -> Unit,
+    onVolverLogin: () -> Unit
 ) {
-    Scaffold (
+    Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.titulo_formulario)) },
@@ -87,8 +97,7 @@ fun FormularioContent(
             )
         },
         containerColor = MaterialTheme.colorScheme.background
-    )   {
-        innerPadding ->
+    ) { innerPadding ->
 
         Column(
             modifier = Modifier
@@ -99,80 +108,91 @@ fun FormularioContent(
 
             ImagenEncabezado(
                 imagen = R.drawable.banner_pago,
-                descripcion = "Banner de formulario",
-                titulo = "Inicia Sesion.",
-                subtitulo = "Y paga tus cuentas facil."
+                descripcion = "Banner de creación de cuenta",
+                titulo = "Crea tu cuenta.",
+                subtitulo = "Y paga tus cuentas fácil."
             )
-        }
-        Column(
-            modifier = Modifier.padding(Dimens.Pantalla),
-            verticalArrangement = Arrangement.spacedBy(Dimens.EspacioMediano)
-        ) {
-            TarjetaSeccion (valor = stringResource(R.string.seccion_datos)) {
-                CampoTexto(
-                    valor = uiState.nombre,
-                    onValorCambia = onNombreCambia,
-                    etiqueta = stringResource(R.string.campo_nombre),
-                    icono = R.drawable.ic_persona,
-                    error = uiState.errorNombre
-                )
 
-                CampoCorreo(
-                    valor = uiState.correo,
-                    onValorCambia = onCorreoCambia,
-                    etiqueta = stringResource(R.string.campo_correo),
-                    icono = R.drawable.ic_correo,
-                    error = uiState.errorCorreo
-                )
-
-                CampoContrasenia(
-                    valor = uiState.contrasenia,
-                    onValorCambia = onContraseniaCambia,
-                    etiqueta = stringResource(R.string.campo_contrasenia),
-                    visible = uiState.contraseniaVisible,
-                    onAlternarVisible = onAlternarVisibilidad,
-                    error = uiState.errorContrasenia
-                )
-
-            }
-            Column {
-                CasillaConTexto(
-                    texto = stringResource(R.string.opcion_terminos),
-                    marcado = uiState.aceptarTerminos,
-                    onCambio = onTerminosCambia
-                )
-                uiState.errorTerminos?.let { mensaje ->
-                    Text(
-                        text = mensaje,
-                        color = MaterialTheme.colorScheme.error,
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(start = Dimens.EspacioPequeno)
+            Column(
+                modifier = Modifier.padding(Dimens.Pantalla),
+                verticalArrangement = Arrangement.spacedBy(Dimens.EspacioMediano)
+            ) {
+                TarjetaSeccion(valor = stringResource(R.string.seccion_datos)) {
+                    CampoTexto(
+                        valor = uiState.nombre,
+                        onValorCambia = onNombreCambia,
+                        etiqueta = stringResource(R.string.campo_nombre),
+                        icono = R.drawable.ic_persona,
+                        error = uiState.errorNombre
                     )
-                }
-            }
 
-            Row(horizontalArrangement = Arrangement.spacedBy(Dimens.EspacioMediano)) {
-                BotonSecundario(
-                    texto = stringResource(R.string.btn_limbiar),
-                    onClick = onLimpiar,
-                    modifier = Modifier.weight(1f)
-                )
-                BotonPrincipal(
+                    CampoCorreo(
+                        valor = uiState.correo,
+                        onValorCambia = onCorreoCambia,
+                        etiqueta = stringResource(R.string.campo_correo),
+                        icono = R.drawable.ic_correo,
+                        error = uiState.errorCorreo
+                    )
+
+                    CampoContrasenia(
+                        valor = uiState.contrasenia,
+                        onValorCambia = onContraseniaCambia,
+                        etiqueta = stringResource(R.string.campo_contrasenia),
+                        visible = uiState.contraseniaVisible,
+                        onAlternarVisible = onAlternarVisibilidad,
+                        error = uiState.errorContrasenia
+                    )
+
+                    Text(
+                        text = "La contraseña debe tener 8 caracteres, una mayúscula, una minúscula, un número, un símbolo y no contener tu nombre.",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+
+                }
+                Column {
+                    CasillaConTexto(
+                        texto = stringResource(R.string.opcion_terminos),
+                        marcado = uiState.aceptarTerminos,
+                        onCambio = onTerminosCambia
+                    )
+                    uiState.errorTerminos?.let { mensaje ->
+                        Text(
+                            text = mensaje,
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.padding(start = Dimens.EspacioPequeno)
+                        )
+                    }
+                }
+
+                Row(horizontalArrangement = Arrangement.spacedBy(Dimens.EspacioMediano)) {
+                    BotonSecundario(
+                        texto = stringResource(R.string.btn_limbiar),
+                        onClick = onLimpiar,
+                        modifier = Modifier.weight(1f)
+                    )
+                    BotonPrincipal(
                         texto = stringResource(R.string.btn_registro),
                         onClick = onRegistrar,
                         icono = R.drawable.ic_estado_correcto,
                         modifier = Modifier.weight(1f)
-                )
-            }
-            if (uiState.registroExitoso) {
-                MensajeExito(nombre = uiState.nombre)
-            }
+                    )
+                }
+                if (uiState.registroExitoso) {
+                    MensajeExito(nombre = uiState.nombre)
+                }
 
-            Spacer(Modifier.height(Dimens.EspacioGrande))
+                BotonSecundario(
+                    texto = "Ya tengo una cuenta",
+                    onClick = onVolverLogin,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(Modifier.height(Dimens.EspacioGrande))
+            }
         }
     }
 }
-
 
 @Composable
 private fun MensajeExito(nombre: String) {
@@ -217,7 +237,8 @@ private fun FormularioVacioPreview(){
             onAlternarVisibilidad = {},
             onTerminosCambia = {},
             onRegistrar = {},
-            onLimpiar = {}
+            onLimpiar = {},
+            onVolverLogin = {}
 
         )
     }
@@ -241,7 +262,8 @@ private fun FormularioConErroresPreview() {
             onAlternarVisibilidad = {},
             onTerminosCambia = {},
             onRegistrar = {},
-            onLimpiar = {}
+            onLimpiar = {},
+            onVolverLogin = {}
         )
     }
 }
