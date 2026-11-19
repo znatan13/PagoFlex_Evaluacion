@@ -26,13 +26,15 @@ import com.example.pagoflex.viewmodel.PagosViewModel
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PagosScreen(
+    pagoSeleccionado: Pagos? = null,
     viewModel: PagosViewModel = viewModel()
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val pago = pagoSeleccionado ?: uiState.pagos
 
     PagosContent(
-        uiState = uiState,
+        uiState = uiState.copy(pagos = pago),
         onAlternarPago = viewModel::onAlternarPago,
         onPagado = viewModel::onPagado
     )
