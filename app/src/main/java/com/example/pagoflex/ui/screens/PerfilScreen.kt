@@ -61,8 +61,9 @@ import androidx.compose.ui.tooling.preview.Preview
 @Composable
 fun PerfilScreen(
     onCompraClick: (Pagos) -> Unit = {},
+    onEditarPerfil: () -> Unit = {},
     viewModel: PerfilViewModel = viewModel()
-) {
+){
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = androidx.compose.ui.platform.LocalContext.current
 
@@ -99,7 +100,8 @@ fun PerfilScreen(
         uiState = uiState,
         imagenPerfil = imagenPerfil,
         onCambiarFoto = { mostrarOpciones = true },
-        onCompraClick = onCompraClick
+        onCompraClick = onCompraClick,
+        onEditarPerfil = onEditarPerfil
     )
 
     if (mostrarOpciones) {
@@ -145,7 +147,8 @@ fun PerfilContent(
     uiState: PerfilUiState,
     imagenPerfil: Bitmap? = null,
     onCambiarFoto: () -> Unit = {},
-    onCompraClick: (Pagos) -> Unit = {}
+    onCompraClick: (Pagos) -> Unit = {},
+    onEditarPerfil: () -> Unit = {}
 ) {
     val perfil = uiState.perfil
 
@@ -174,7 +177,18 @@ fun PerfilContent(
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(title = { Text(stringResource(R.string.titulo_perfil)) })
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(stringResource(R.string.titulo_perfil))
+                },
+                actions = {
+                    androidx.compose.material3.IconButton(
+                        onClick = onEditarPerfil
+                    ) {
+                        Text("⚙", style = MaterialTheme.typography.titleLarge)
+                    }
+                }
+            )
         },
 
     ) { innerPadding ->
