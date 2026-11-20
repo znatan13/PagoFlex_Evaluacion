@@ -6,7 +6,10 @@ data class Pagos (
     val monto: Int,
     val vencimiento: String,
     val estado: Boolean,
-    val historial: List<String>
+    val historial: List<String>,
+    val descripcion: String = "",
+    val metodoPago: String = "",
+    val categoria: String = ""
 )
 
 data class PagosUrgentes (

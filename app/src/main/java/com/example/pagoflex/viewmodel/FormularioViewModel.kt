@@ -39,8 +39,19 @@ class FormularioViewModel : ViewModel() {
         val errorCorreo = if (!estado.correo.contains("@") || !estado.correo.contains("."))
             "Ingrese un correo valido" else null
 
-        val errorContrasenia = if (estado.contrasenia.length < 6)
-            "La contraseña debe incluir minimo 6 caracteres" else null
+        val nombreMinuscula = estado.nombre.trim().lowercase()
+        val contraseniaMinuscula = estado.contrasenia.lowercase()
+        val erroresContrasenia = mutableListOf<String>()
+
+        if (estado.contrasenia.length < 8) erroresContrasenia.add("8 caracteres")
+        if (!estado.contrasenia.any { it.isUpperCase() }) erroresContrasenia.add("una mayúscula")
+        if (!estado.contrasenia.any { it.isLowerCase() }) erroresContrasenia.add("una minúscula")
+        if (!estado.contrasenia.any { it.isDigit() }) erroresContrasenia.add("un número")
+        if (!estado.contrasenia.any { !it.isLetterOrDigit() }) erroresContrasenia.add("un símbolo")
+        if (nombreMinuscula.isNotBlank() && contraseniaMinuscula.contains(nombreMinuscula)) erroresContrasenia.add("no contener tu nombre")
+
+        val errorContrasenia = if (erroresContrasenia.isNotEmpty())
+            "Falta: ${erroresContrasenia.joinToString(", ")}" else null
 
         val errorTerminos = if (!estado.aceptarTerminos)
             "Debes aceptar los terminos y condiciones" else null

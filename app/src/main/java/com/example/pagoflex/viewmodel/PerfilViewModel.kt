@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class PerfilViewModel : ViewModel(){
-
+    private var contrasenia = "#Test123"
     private val perfilEjemplo = Perfil(
-        nombre = "Juan",
-        correo = "Lopez",
+        nombre = "Juan Lopez",
+        correo = "J.lopez@gmail.com",
         pagadas = 1,
         suscripciones = 2
     )
@@ -20,5 +20,17 @@ class PerfilViewModel : ViewModel(){
 
     val uiState: StateFlow<PerfilUiState> = _uiState.asStateFlow()
 
+    fun obtenerContrasenia(): String = contrasenia
 
+    fun actualizarPerfil(nombre: String, correo: String, nuevaContrasenia: String) {
+        _uiState.update { estado ->
+            estado.copy(
+                perfil = estado.perfil.copy(
+                    nombre = nombre,
+                    correo = correo
+                )
+            )
+        }
+        contrasenia = nuevaContrasenia
+    }
 }

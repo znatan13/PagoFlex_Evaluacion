@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,10 +27,14 @@ import com.example.pagoflex.viewmodel.PagosViewModel
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PagosScreen(
+    pagoSeleccionado: Pagos? = null,
     viewModel: PagosViewModel = viewModel()
 ) {
-
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(pagoSeleccionado) {
+        pagoSeleccionado?.let(viewModel::seleccionarPago)
+    }
 
     PagosContent(
         uiState = uiState,
